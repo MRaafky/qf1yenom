@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 const requiredEnv = ["JWT_SECRET"];
 
 requiredEnv.forEach((key) => {
@@ -7,3 +10,4 @@ requiredEnv.forEach((key) => {
 });
 
 export const JWT_SECRET = process.env.JWT_SECRET as string;
+

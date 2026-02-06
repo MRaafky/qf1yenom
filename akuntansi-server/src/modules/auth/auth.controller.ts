@@ -1,10 +1,10 @@
 import type { Request, Response } from "express";
 import { JWT_SECRET } from "../../config/env.js";
+
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import type { RegisterSchema } from "./auth.schema.ts";
-import type { LoginSchema } from "./auth.schema.ts";
-const prisma = require("../../config/prisma.ts");
+import type { RegisterSchema, LoginSchema } from "./auth.schema.js";
+import { prisma } from "../../config/prisma.js";
 
 export const register = async (req: Request, res: Response) => {
   try {

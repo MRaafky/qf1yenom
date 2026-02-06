@@ -85,7 +85,11 @@ const Sidebar = ({ currentPage, setCurrentPage, isDarkMode }) => {
           {generalItems.map((item, index) => (
             <button
               key={index}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${isDarkMode ? 'text-gray-300 hover:bg-gray-700 hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}`}
+              onClick={() => setCurrentPage(item.label)}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${currentPage === item.label
+                ? 'bg-blue-50 text-blue-600'
+                : isDarkMode ? 'text-gray-300 hover:bg-gray-700 hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                }`}
             >
               <item.icon className="w-5 h-5" strokeWidth={2} />
               <span>{item.label}</span>

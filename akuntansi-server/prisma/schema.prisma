@@ -1,17 +1,21 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "windows"]
 }
 
 datasource db {
   provider = "mysql"
+  url      = env("DATABASE_URL")
 }
+
 
 model Role {
   role_id   Int     @id @default(autoincrement())
   nama_role String
 
   users     User[]  // relasi one-to-many
+  
+  @@map("roles")
 }
 
 model User {
@@ -23,4 +27,6 @@ model User {
 
   role_id Int
   role    Role   @relation(fields: [role_id], references: [role_id])
+  
+  @@map("users")
 }
