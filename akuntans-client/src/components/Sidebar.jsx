@@ -1,65 +1,95 @@
 import React from 'react';
-import { FiSearch, FiHome, FiGrid, FiFolder, FiDollarSign, FiList, FiRefreshCcw, FiArrowDownCircle } from 'react-icons/fi';
+import { Home, Settings, FileText, ClipboardList, BarChart3, Lock, LogOut } from 'lucide-react';
 
-const Sidebar = ({ isDarkMode }) => {
-  // Data menu dummy agar mudah dibaca
+const Sidebar = ({ currentPage, setCurrentPage, isDarkMode }) => {
   const menuItems = [
-    { icon: FiHome, label: 'Home' },
-    { icon: FiGrid, label: 'Dashboard' },
-    { icon: FiFolder, label: 'Project' },
+    { icon: Home, label: 'Home' },
+    { icon: Settings, label: 'Setup' },
+    { icon: FileText, label: 'Transaksi' },
+    { icon: ClipboardList, label: 'Laporan' },
+    { icon: BarChart3, label: 'Rekap Laporan' },
   ];
 
-  const financialItems = [
-    { icon: FiDollarSign, label: 'Revenue & Pricing', active: true }, // Yang sedang aktif di gambar
-    { icon: FiList, label: 'Transactions' },
-    { icon: FiRefreshCcw, label: 'Refunds & Adjusments' },
-    { icon: FiArrowDownCircle, label: 'WithDrawals' },
+  const generalItems = [
+    { icon: Lock, label: 'Ganti Password' },
+    { icon: LogOut, label: 'Log Out' },
   ];
 
   return (
-    <div className={`w-64 ${isDarkMode ? 'bg-gray-800' : 'bg-white'} h-screen fixed left-0 top-0 ${isDarkMode ? 'border-gray-700' : 'border-gray-200'} border-r p-5 flex flex-col`}>
-      {/* Logo Placeholder */}
-      <div className="flex items-center gap-2 mb-6">
-        <div className="w-8 h-8 bg-green-500 rounded-full"></div>
-        <div>
-          <h1 className={`font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'} text-sm leading-tight`}>akuntans</h1>
-          <p className="text-xs text-gray-400">Surakarta</p>
+    <div className={`w-64 h-screen ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border-r flex flex-col`}>
+      {/* Logo Section */}
+      <div className={`p-6 ${isDarkMode ? 'border-gray-700' : 'border-gray-100'} border-b`}>
+        <div className="flex items-center gap-3">
+          {/* Logo Icon */}
+          <div className="w-10 h-10 relative flex-shrink-0">
+            <svg viewBox="0 0 40 40" className="w-full h-full">
+              {/* Leaf/Medical Icon */}
+              <path
+                d="M20 8C15 8 12 12 12 16C12 20 15 24 20 28C25 24 28 20 28 16C28 12 25 8 20 8Z"
+                fill="#10b981"
+                opacity="0.2"
+              />
+              <path
+                d="M20 10C16 10 14 13 14 16C14 19 16 22 20 26C24 22 26 19 26 16C26 13 24 10 20 10Z"
+                fill="#10b981"
+              />
+              {/* Medical Cross Circle */}
+              <circle cx="20" cy="16" r="6" fill="#3b82f6" />
+              <path
+                d="M20 13V19M17 16H23"
+                stroke="white"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+            </svg>
+          </div>
+          {/* Logo Text */}
+          <div className="flex flex-col">
+            <span className="text-sm font-semibold text-green-600 leading-tight">Rumah Sakit</span>
+            <span className="text-xs font-semibold text-blue-600 leading-tight">UMS A.R. Fachrudin</span>
+          </div>
         </div>
       </div>
 
-      {/* Search Bar */}
-      <div className="relative mb-5">
-        <FiSearch className="absolute left-3 top-2.5 text-gray-400" size={16} />
-        <input
-          type="text"
-          placeholder="Search for anything..."
-          className={`w-full ${isDarkMode ? 'bg-gray-700 text-gray-200 placeholder-gray-500' : 'bg-gray-50 text-gray-600 placeholder-gray-400'} rounded-lg pl-9 pr-4 py-2 focus:outline-none focus:ring-1 focus:ring-blue-300 text-sm`}
-        />
-      </div>
-
-      {/* Menu Utama */}
-      <nav className="space-y-0.5 mb-5">
-        {menuItems.map((item, index) => (
-          <a key={index} href="#" className={`flex items-center gap-3 ${isDarkMode ? 'text-gray-400 hover:text-blue-400 hover:bg-gray-700' : 'text-gray-400 hover:text-blue-600 hover:bg-blue-50'} px-3 py-2.5 rounded-lg transition-colors text-sm`}>
-            <item.icon size={18} />
-            <span className="font-medium">{item.label}</span>
-          </a>
-        ))}
-      </nav>
-
-      {/* Financials Menu (Accordion style opened) */}
-      <div className="mb-2">
-        <div className="flex justify-between items-center text-gray-400 px-3 mb-1.5">
-          <span className="flex items-center gap-3 font-medium text-sm"><FiDollarSign size={18} /> Financials</span>
+      {/* Menu Section */}
+      <div className="flex-1 py-6 overflow-y-auto">
+        {/* Menu Label */}
+        <div className="px-6 mb-3">
+          <span className={`text-xs font-semibold ${isDarkMode ? 'text-gray-500' : 'text-gray-400'} uppercase tracking-wider`}>Menu</span>
         </div>
-        <nav className="space-y-0.5 pl-3 relative">
-          {/* Garis vertikal di kiri submenu */}
-          <div className={`absolute left-6 top-0 bottom-0 w-px ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'}`}></div>
-          {financialItems.map((item, index) => (
-            <a key={index} href="#" className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors relative z-10 text-sm ${item.active ? 'text-blue-600 bg-blue-50 font-semibold' : isDarkMode ? 'text-gray-400 hover:text-blue-400 hover:bg-gray-700' : 'text-gray-400 hover:text-blue-600 hover:bg-blue-50'}`}>
-              <item.icon size={18} />
+
+        {/* Menu Items */}
+        <nav className="space-y-1 px-3">
+          {menuItems.map((item, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentPage(item.label)}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${currentPage === item.label
+                ? 'bg-blue-50 text-blue-600'
+                : isDarkMode ? 'text-gray-300 hover:bg-gray-700 hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                }`}
+            >
+              <item.icon className="w-5 h-5" strokeWidth={2} />
               <span>{item.label}</span>
-            </a>
+            </button>
+          ))}
+        </nav>
+
+        {/* General Label */}
+        <div className="px-6 mt-8 mb-3">
+          <span className={`text-xs font-semibold ${isDarkMode ? 'text-gray-500' : 'text-gray-400'} uppercase tracking-wider`}>General</span>
+        </div>
+
+        {/* General Items */}
+        <nav className="space-y-1 px-3">
+          {generalItems.map((item, index) => (
+            <button
+              key={index}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${isDarkMode ? 'text-gray-300 hover:bg-gray-700 hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}`}
+            >
+              <item.icon className="w-5 h-5" strokeWidth={2} />
+              <span>{item.label}</span>
+            </button>
           ))}
         </nav>
       </div>
