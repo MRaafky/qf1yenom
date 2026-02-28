@@ -1,0 +1,39 @@
+# login
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "admin@gmail.com",
+    "password": "admin123"
+}
+
+###
+# logout
+POST http://localhost:3000/api/auth/logout
+Content-Type: application/json
+
+###
+# get all user
+GET  http://localhost:3000/api/users/getUsers
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIzIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJwZXJtaXNzaW9ucyI6WyJ1c2VyczpjcmVhdGUiLCJ1c2Vyczp1cGRhdGUiLCJ1c2VyczpkZWxldGUiLCJ1c2Vyczp2aWV3IiwiYWNjb3VudHM6Y3JlYXRlIiwiYWNjb3VudHM6dXBkYXRlIiwiYWNjb3VudHM6ZGVsZXRlIiwiYWNjb3VudHM6dmlldyJdLCJpYXQiOjE3NzIyOTI0NTMsImV4cCI6MTc3MjI5MzM1M30.I2RNBqUPq28XStCt6egNj9798CcOGHQLquoFCLI80-8
+
+###
+# add user
+POST http://localhost:3000/api/users/createUser
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIzIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJwZXJtaXNzaW9ucyI6WyJ1c2VyczpjcmVhdGUiLCJ1c2Vyczp1cGRhdGUiLCJ1c2VyczpkZWxldGUiLCJ1c2Vyczp2aWV3IiwiYWNjb3VudHM6Y3JlYXRlIiwiYWNjb3VudHM6dXBkYXRlIiwiYWNjb3VudHM6ZGVsZXRlIiwiYWNjb3VudHM6dmlldyJdLCJpYXQiOjE3NzIyOTI0NTMsImV4cCI6MTc3MjI5MzM1M30.I2RNBqUPq28XStCt6egNj9798CcOGHQLquoFCLI80-8
+Content-Type: application/json
+
+{
+  "name": "akuntan",
+  "email": "akuntan@gmail.com",
+  "password": "akuntan123",
+  "roleId": 2
+}
+
+###
+# delete user
+DELETE  http://localhost:3000/api/users/deleteUser/2
+
+###
+# update user
+PUT http://localhost:3000/api/users/updateUser/2

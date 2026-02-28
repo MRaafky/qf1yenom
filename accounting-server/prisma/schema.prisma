@@ -1,0 +1,147 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+// Enums
+enum AccountCategory {
+  Aset
+  Liabilitas
+  Ekuitas
+  Income
+  Cost
+}
+
+enum NormalBalance {
+  debet
+  kredit
+}
+
+enum AccountStatus {
+  aktif
+  nonaktif
+}
+
+// Auth Tables
+model users {
+  id        BigInt   @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+
+  refreshTokens refresh_tokens[]
+  journalUsers  journal_users[]
+
+  roleId    BigInt
+  role      roles    @relation(fields: [roleId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model refresh_tokens {
+  id        BigInt   @id @default(autoincrement())
+  userId    BigInt
+  token     String   @unique
+  expiresAt DateTime
+
+  user      users    @relation(fields: [userId], references: [id])
+}
+
+model roles {
+  id          BigInt   @id @default(autoincrement())
+  name        String   @unique
+  description String?
+
+  users       users[]
+  permissions role_permissions[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model permissions {
+  id          BigInt   @id @default(autoincrement())
+  name        String   @unique
+  description String?
+
+  roles       role_permissions[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model role_permissions {
+  roleId       BigInt
+  permissionId BigInt
+
+  role         roles       @relation(fields: [roleId], references: [id])
+  permission   permissions @relation(fields: [permissionId], references: [id])
+
+  @@id([roleId, permissionId])
+}
+
+// Accounting Tables
+model accounts {
+  kode_akun      String   @id
+  nama_akun      String
+  kategori_akun  AccountCategory
+  saldo_normal   NormalBalance
+  status         AccountStatus
+
+  openingBalances opening_balance[]
+  journalDetails  journal_details[]
+}
+
+model opening_balance {
+  id              BigInt  @id @default(autoincrement())
+  kode_akun       String
+  opening_balance Int
+
+  account accounts @relation(fields: [kode_akun], references: [kode_akun])
+}
+
+model journals {
+  id         BigInt   @id @default(autoincrement())
+  tanggal    DateTime @db.Date
+  deskripsi  String
+  is_voided  Boolean  @default(false)
+  created_at DateTime @default(now())
+
+  details      journal_details[]
+  journalUsers journal_users[]
+}
+
+model journal_details {
+  id         BigInt  @id @default(autoincrement())
+  journal_id BigInt
+  kode_akun  String
+  debit      Int     @default(0)
+  kredit     Int     @default(0)
+
+  journal journals @relation(fields: [journal_id], references: [id])
+  account accounts @relation(fields: [kode_akun], references: [kode_akun])
+
+  @@index([journal_id])
+  @@index([kode_akun])
+}
+
+model journal_users {
+  journal_id BigInt
+  user_id    BigInt
+
+  journal journals @relation(fields: [journal_id], references: [id])
+  user    users    @relation(fields: [user_id], references: [id])
+
+  @@id([journal_id, user_id])
+}
