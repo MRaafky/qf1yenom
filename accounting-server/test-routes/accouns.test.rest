@@ -1,0 +1,13 @@
+GET http://localhost:3000/api/accounts/getAccounts
+
+###
+POST http://localhost:3000/api/accounts/createAccount
+Content-Type: application/json
+
+{
+  "kode_akun": "201",
+  "nama_akun": "Kas",
+  "kategori_akun": "Aset",
+  "saldo_normal": "debet",
+  "status": "aktif"
+}
