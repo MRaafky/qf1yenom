@@ -27,7 +27,6 @@ export const autenticate = (
     }
 
     req.user = decoded;
-
     next();
   } catch (error) {}
 };
